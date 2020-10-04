@@ -1,0 +1,16 @@
+{
+  "port": 24000,
+  "launch": [
+    "chrome.headless"
+  ],
+  "app": {
+    "command": "yarn start",
+    "env": {
+      "PORT": 24001
+    },
+    "url": "http://localhost:24001"
+  },
+  "testFiles": [
+    "test/**/*.test.{ts,js}"
+  ]
+}
