@@ -14,10 +14,11 @@
     "node": ">=10"
   },
   "scripts": {
-    "start": "PORT=1234 rollup -cw",
-    "start2": "tsdx watch",
-    "build": "tsdx build",
-    "test": "tsdx test --passWithNoTests",
+    "start": "rollup -cw",
+    "build": "rollup -c",
+    "test": "yarn bigtest ci",
+    "test:server": "yarn bigtest server",
+    "test:run": "yarn bigtest test",
     "lint": "tsdx lint",
     "prepare": "tsdx build"
   },

@@ -6,13 +6,13 @@ import serve from 'rollup-plugin-serve';
 import commonjs from 'rollup-plugin-commonjs';
 import globals from 'rollup-plugin-node-globals';
 
-const isProduction = process.env.NODE_ENV === 'production';
-const PORT = process.env.PORT ? process.env.PORT : 3000;
+const PORT = 3000;
+const name = 'reactAuth0';
 
 export default {
   input: 'src/index.tsx',
   output: {
-    name: 'reactAuth0',
+    name,
     file: 'dist/auth0-react.js',
     format: 'umd',
   },
@@ -29,13 +29,11 @@ export default {
       }
     }),
     globals(),
-    ...(!isProduction && [
-      serve({
-        contentBase: ['dist', 'static'],
-        open: true,
-        port: PORT
-      }),
-      livereload()
-    ])
+    serve({
+      contentBase: ['dist', 'static'],
+      open: true,
+      port: PORT
+    }),
+    livereload()
   ]
 }

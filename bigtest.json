@@ -4,13 +4,10 @@
     "chrome.headless"
   ],
   "app": {
-    "command": "yarn start",
-    "env": {
-      "PORT": 24001
-    },
-    "url": "http://localhost:24001"
+    "command": "rollup -cw",
+    "url": "http://localhost:3000"
   },
   "testFiles": [
-    "test/**/*.test.{ts,js}"
+    "./test/**/*.test.{ts,js}"
   ]
 }

@@ -2,7 +2,7 @@ import * as React from 'react';
 import ReactDOM from 'react-dom';
 
 const Thing = () => {
-  return <div>the snozzberries taste like snozzberradfasdfies</div>;
+  return <header>the snozzberries taste like snozzberradfasdfies</header>;
 };
 
 ReactDOM.render(
