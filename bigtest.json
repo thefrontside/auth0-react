@@ -1,13 +1,13 @@
 {
   "port": 24000,
   "launch": [
-    "chrome.headless"
+    "chrome"
   ],
   "app": {
-    "command": "rollup -cw",
+    "command": "REACT_APP_SIMULATION_ENABLE=true rollup -cw",
     "url": "http://localhost:3000"
   },
   "testFiles": [
-    "./test/**/*.test.{ts,js}"
+    "./test/**/*.test.ts"
   ]
 }

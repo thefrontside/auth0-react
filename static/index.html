@@ -11,8 +11,8 @@
   </head>
   <body>
     <div id="app"></div>
-    <!-- <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-    <script src="https://unpkg.com/babel-polyfill@6/dist/polyfill.min.js"></script> -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://unpkg.com/babel-polyfill@6/dist/polyfill.min.js"></script>
     <script
       crossorigin
       src="https://unpkg.com/react@16/umd/react.development.js"
@@ -23,6 +23,51 @@
     ></script>
     <script src="https://cdn.auth0.com/js/auth0-spa-js/1.7/auth0-spa-js.production.js"></script>
     <script src="auth0-react.js"></script>
-    <!-- <script type="text/babel" data-presets="es2015,es2016,es2017,stage-3,react"></script> -->
+    <script type="text/babel" data-presets="es2015,es2016,es2017,stage-3,react">
+      const { useState, useEffect } = React;
+      
+      const Thing = () => {
+        let [ userData, setUserData ] = useState({
+          username: '',
+          password: ''
+        });
+      
+        useEffect(() => {
+          let user = JSON.parse(`${localStorage.getItem('user')}`);
+          if (user.username && user.password) {
+            setUserData({
+              username: user.username,
+              password: user.password
+            })
+          }
+        }, []);
+      
+        return (
+          userData.username && userData.password ? (
+            <div>
+              <div>your username:</div>
+              <div id='username'>{userData.username}</div>
+              <div>your password:</div>
+              <div id='password'>{userData.password}</div>
+            </div>
+          ) : (
+            <div>
+              Not logged in
+            </div>
+          )
+        )
+      };
+      
+      const App = () => {
+        return (
+          <Thing />
+        )
+      }
+      
+      ReactDOM.render(
+        <App/>,
+        document.getElementById('app')
+      );
+    </script>
   </body>
 </html>
