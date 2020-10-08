@@ -4,8 +4,8 @@
     "chrome"
   ],
   "app": {
-    "command": "REACT_APP_SIMULATION_ENABLE=true rollup -cw",
-    "url": "http://localhost:3000"
+    "command": "REACT_APP_SIMULATION_ENABLE=true parcel static/index.html --no-cache --out-dir build/",
+    "url": "http://localhost:1234"
   },
   "testFiles": [
     "./test/**/*.test.ts"

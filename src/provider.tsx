@@ -13,6 +13,4 @@ const TestableAuth0Provider = (props: Auth0ProviderOptions): JSX.Element => {
   )
 };
 
-const ENABLE_SIMULATION = !'process.env.REACT_APP_SIMULATION_ENABLE';
-
-export const Auth0Provider =  ENABLE_SIMULATION ? TestableAuth0Provider : AuthProvider;
+export const Auth0Provider =  process.env.REACT_APP_SIMULATION_ENABLE ? TestableAuth0Provider : AuthProvider;

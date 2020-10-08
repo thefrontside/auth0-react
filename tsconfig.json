@@ -5,6 +5,7 @@
   },
   "extends": "@frontside/tsconfig",
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "src/**/*.tsx"
   ]
 }
