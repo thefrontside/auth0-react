@@ -15,12 +15,10 @@
   },
   "scripts": {
     "start": "parcel static/index.html --open --out-dir build/ --no-source-maps",
-    "build": "tsdx build",
+    "prepare": "tsdx build",
     "test": "yarn bigtest ci",
-    "test:server": "rm -rf .bigtest && yarn bigtest server",
-    "test:run": "yarn bigtest test",
-    "lint": "tsdx lint",
-    "prepare": "tsdx build"
+    "test:server": "yarn bigtest server",
+    "test:run": "yarn bigtest test"
   },
   "peerDependencies": {
     "react": ">=16"
