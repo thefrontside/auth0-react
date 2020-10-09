@@ -14,7 +14,7 @@
     "node": ">=10"
   },
   "scripts": {
-    "start": "parcel static/index.html --open --out-dir build/",
+    "start": "parcel static/index.html --open --out-dir build/ --no-source-maps",
     "build": "tsdx build",
     "test": "yarn bigtest ci",
     "test:server": "rm -rf .bigtest && yarn bigtest server",

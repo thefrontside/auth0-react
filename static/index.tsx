@@ -1,33 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-// import { Auth0Provider } from '../src/provider';
+import { Auth0Provider } from '../src/provider';
+import { useAuth0 } from '@auth0/auth0-react';
       
-const Thing = () => {
-  let [ userData, setUserData ] = useState({
-    firstName: '',
-    lastName: '',
-    isAuthenticated: false
-  });
+const Page = () => {
+  let {
+    isAuthenticated,
+    user,
+    // error, isLoading,
+    // getAccessTokenSilently, getAccessTokenWithPopup, getIdTokenClaims, loginWithRedirect, loginWithPopup, logout
+  } = useAuth0();
 
-  useEffect(() => {
-    let auth0 = JSON.parse(`${localStorage.getItem('@frontside/auth0-react')}`) || '';
-    if (auth0.session.firstName && auth0.session.lastName && auth0.isAuthenticated) {
-      setUserData({
-        firstName: auth0.session.firstName,
-        lastName: auth0.session.lastName,
-        isAuthenticated: auth0.isAuthenticated
-      })
-    }
-  }, []);
-
-  return (
-    <p>hello {userData.firstName} {userData.lastName}</p>
+  return isAuthenticated ? (
+    <p>hello {user.firstName} {user.lastName}</p>
+  ) : (
+    <p>user is not authenticated</p>
   )
 };
 
 const App = () => {
   return (
-    <Thing />
+    <Auth0Provider
+      domain="dev-02sbo7-w.us.auth0.com"
+      clientId="fwXiqOHihG63vBYGPhSCMHdRjruioWVr"
+      redirectUri={window.location.origin}
+      simulation={process.env.REACT_APP_SIMULATION_ENABLE}
+    >
+      <Page />
+    </Auth0Provider>
   )
 }
 
