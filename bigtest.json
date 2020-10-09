@@ -1,7 +1,7 @@
 {
   "port": 24000,
   "launch": [
-    "chrome"
+    "chrome.headless"
   ],
   "app": {
     "command": "REACT_APP_SIMULATION_ENABLE=true parcel static/index.html --no-cache --out-dir build/ --no-source-maps",
