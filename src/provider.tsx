@@ -51,4 +51,5 @@ const TestableAuth0Provider = (props: Auth0ProviderOptions): JSX.Element => {
   )
 };
 
-export const Auth0Provider =  process.env.REACT_APP_SIMULATION_ENABLE ? TestableAuth0Provider : AuthProvider;
+const parseBoolean = (str = '') => str.toLowerCase() === 'true';
+export const Auth0Provider =  parseBoolean(process.env.REACT_APP_SIMULATION) ? TestableAuth0Provider : AuthProvider;

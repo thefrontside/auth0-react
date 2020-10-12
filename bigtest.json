@@ -1,10 +1,10 @@
 {
   "port": 24000,
   "launch": [
-    "chrome.headless"
+    "chrome"
   ],
   "app": {
-    "command": "REACT_APP_SIMULATION_ENABLE=true parcel static/index.html --no-cache --out-dir build/ --no-source-maps",
+    "command": "REACT_APP_SIMULATION=true parcel static/index.html --no-cache --out-dir build/ --no-source-maps",
     "url": "http://localhost:1234"
   },
   "testFiles": [
