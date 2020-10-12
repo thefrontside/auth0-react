@@ -7,8 +7,14 @@ const Page = () => {
   let {
     isAuthenticated,
     user,
-    // error, isLoading,
-    // getAccessTokenSilently, getAccessTokenWithPopup, getIdTokenClaims, loginWithRedirect, loginWithPopup, logout
+    // error,
+    // isLoading,
+    // getAccessTokenSilently,
+    // getAccessTokenWithPopup,
+    // getIdTokenClaims,
+    // loginWithRedirect,
+    // loginWithPopup,
+    // logout
   } = useAuth0();
 
   return isAuthenticated ? (
@@ -24,7 +30,6 @@ const App = () => {
       domain="dev-02sbo7-w.us.auth0.com"
       clientId="fwXiqOHihG63vBYGPhSCMHdRjruioWVr"
       redirectUri={window.location.origin}
-      simulation={process.env.REACT_APP_SIMULATION_ENABLE}
     >
       <Page />
     </Auth0Provider>

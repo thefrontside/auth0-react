@@ -7,10 +7,10 @@ import { authenticateUser } from '../src/test-helpers';
 export default test('sure')
   .child('authenticated', test => test
     .step('set username and password', async () => {
-      authenticateUser({firstName: 'Homer', lastName: 'Simpson'});
+      authenticateUser();
     })
     .step(App.visit('/'))
-    .assertion(Paragraph('hello Homer Simpson').exists()))
+    .assertion(Paragraph('user is not authenticated').absent()))
   .child('unauthenticated', test => test
     .step(App.visit('/'))
     .assertion(Paragraph('user is not authenticated').exists()))
