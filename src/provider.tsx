@@ -26,8 +26,8 @@ const TestableAuth0Provider = (props: Auth0ProviderOptions): JSX.Element => {
         isAuthenticated: authState.isAuthenticated,
         user: authState.user,
         isLoading: false,
-        getAccessTokenSilently: () => {
-          throw new Error('Not yet implemented');
+        getAccessTokenSilently: async () => {
+          return 'my-token';
         },
         getAccessTokenWithPopup: () => {
           throw new Error('Not yet implemented');
@@ -42,7 +42,7 @@ const TestableAuth0Provider = (props: Auth0ProviderOptions): JSX.Element => {
           throw new Error('Not yet implemented');
         },
         logout: () => {
-          throw new Error('Not yet implemented');
+          setAuthState(emptyAuthState())
         },
       }}
     >

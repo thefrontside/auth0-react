@@ -6,7 +6,6 @@ import { useAuth0 } from '@auth0/auth0-react';
 const Page = () => {
   let {
     isAuthenticated,
-    user,
     // error,
     // isLoading,
     // getAccessTokenSilently,
@@ -14,11 +13,15 @@ const Page = () => {
     // getIdTokenClaims,
     // loginWithRedirect,
     // loginWithPopup,
-    // logout
+    logout
   } = useAuth0();
 
   return isAuthenticated ? (
-    <p>hello {user.firstName} {user.lastName}</p>
+    <button
+      onClick={() => logout({ returnTo: window.location.origin })}
+    >
+      logout
+    </button>
   ) : (
     <p>user is not authenticated</p>
   )
