@@ -4,3 +4,5 @@ export function authenticateUser<SessionData>(user?: SessionData) {
     isAuthenticated: true
   }))
 };
+
+// setAcessToken() => puts token into local storage

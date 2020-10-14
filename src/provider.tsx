@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { 
-  Auth0Context
+  Auth0Context,
+  Auth0ProviderOptions
 } from '@auth0/auth0-react';
 
 interface Auth0SimulationProviderOptions {
   children?: React.ReactNode;
-  authorizeURL?: string;
+  authorizeUri?: string;
+  redirectUri?: Auth0ProviderOptions['redirectUri'];
 }
 
 function emptyAuthState(){
@@ -16,13 +18,15 @@ function emptyAuthState(){
 }
 
 export const Auth0SimulationProvider = (props: Auth0SimulationProviderOptions): JSX.Element => {
-  let { authorizeURL = '/authorize' } = props;
+  let { authorizeUri = '/authorize', redirectUri = window.location.origin } = props;
   let [ authState, setAuthState ] = useState(emptyAuthState());
 
   useEffect(() => {
     let auth0 = JSON.parse(`${localStorage.getItem('@frontside/auth0-react')}`) || emptyAuthState();
     setAuthState(auth0);
   }, []);
+
+  // pressing submit = takes user and password and turn into token
 
   return (
     <Auth0Context.Provider
@@ -40,8 +44,8 @@ export const Auth0SimulationProvider = (props: Auth0SimulationProviderOptions): 
           throw new Error('Not yet implemented');
         },
         loginWithRedirect: async () => {
-          if(authorizeURL){
-            window.location.pathname = authorizeURL;
+          if(authorizeUri){
+            window.location.assign(`${authorizeUri}?redirect_uri=${redirectUri}`);
           }
         },
         loginWithPopup: () => {

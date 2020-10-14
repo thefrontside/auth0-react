@@ -25,11 +25,23 @@ export async function converge<T>(fn: () => T): Promise<T> {
   }
 }
 
-const assertUrl = (url: string) => {
+const assertPathname = (url: string) => {
   return () => {
     return converge(() => {
-      if (bigtestGlobals.testFrame?.contentWindow?.location.pathname !== url) {
-        throw new Error('URL does not match');
+      let currentURL = bigtestGlobals.testFrame?.contentWindow?.location.pathname;
+      if (currentURL !== url) {
+        throw new Error(`expected ${url}, received ${currentURL}`);
+      }
+    });
+  };
+};
+
+const assertSearch = (url: string) => {
+  return () => {
+    return converge(() => {
+      let currentURL = bigtestGlobals.testFrame?.contentWindow?.location.search;
+      if (currentURL !== url) {
+        throw new Error(`expected ${url}, received ${currentURL}`);
       }
     });
   };
@@ -42,8 +54,13 @@ export default test('sure')
     .assertion(Paragraph('user is not authenticated').exists())
     .child('using loginWithRedirect', test => test
       .step(Button('login with redirect').click())
-      .assertion('Comfirm App redirected', assertUrl('/authorize'))
+      .assertion('redirected to /authorize', assertPathname('/authorize'))
+      .assertion('includes redirect uri', assertSearch('?redirect_uri=http://localhost:24001'))
       .assertion(Heading('sign in').exists())
+      .child('authorize user', test => test
+        .step(Button('submit').click())
+        .assertion('redirected to /', assertPathname('/'))
+      )
     )
   )
   .child('authenticated', test => test

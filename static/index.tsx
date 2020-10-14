@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { Auth0SimulationProvider, checkAuth0Simulation } from '../src';
 import { Auth0Provider, useAuth0 } from '@auth0/auth0-react';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
-      
+import { authenticateUser } from '../src';
+
 const Home = () => {
   let {
     isAuthenticated,
@@ -57,12 +57,18 @@ const AuthProvider = ({ children }) => {
 }
 
 const SignIn = () => {
+  let [username, setUsername] = useState('');
   return (
     <div>
       <h1>sign in</h1>
-      <form>
-        <input type='text' placeholder='Username'/>
-        <input type='password' placeholder='Password'/>      
+      <form onSubmit={() => {
+        authenticateUser({username});
+        console.log('submitteedddd')
+        debugger;
+        window.location.href = '/';
+      }}>
+        <input type='text' placeholder='Username' value={username} onChange={e => setUsername(e.target.value)}/>
+        <input type='password' placeholder='Password'/>
         <button type='submit'>
           submit
         </button>
@@ -72,6 +78,7 @@ const SignIn = () => {
 }
 
 const App = () => {
+  // if session doesn't exist, go to /authorize
   return (
     <Switch>
       <Route path='/authorize'>
