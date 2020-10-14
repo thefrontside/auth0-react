@@ -1,9 +1,9 @@
-import { App } from '@bigtest/interactor';
+import { App, Button, Heading } from '@bigtest/interactor';
 import { test } from '@bigtest/suite';
 import { bigtestGlobals } from '@bigtest/globals';
 import { authenticateUser } from '../src/test-helpers';
 
-import { Button, Paragraph } from './interactors';
+import { Paragraph } from './interactors';
 
 function wait(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -43,6 +43,7 @@ export default test('sure')
     .child('using loginWithRedirect', test => test
       .step(Button('login with redirect').click())
       .assertion('Comfirm App redirected', assertUrl('/authorize'))
+      .assertion(Heading('sign in').exists())
     )
   )
   .child('authenticated', test => test

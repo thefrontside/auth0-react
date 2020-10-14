@@ -2,8 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Auth0SimulationProvider, checkAuth0Simulation } from '../src';
 import { Auth0Provider, useAuth0 } from '@auth0/auth0-react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
       
-const Page = () => {
+const Home = () => {
   let {
     isAuthenticated,
     // error,
@@ -30,11 +36,11 @@ const Page = () => {
   )
 };
 
-const App = () => {
+const AuthProvider = ({ children }) => {
   if(checkAuth0Simulation()){
     return (
       <Auth0SimulationProvider>
-        <Page />
+        {children}
       </Auth0SimulationProvider>
     )
   } else {
@@ -44,13 +50,45 @@ const App = () => {
         clientId="fwXiqOHihG63vBYGPhSCMHdRjruioWVr"
         redirectUri={window.location.origin}
       >
-        <Page />
+        {children}
       </Auth0Provider>
     )
   }
 }
 
+const SignIn = () => {
+  return (
+    <div>
+      <h1>sign in</h1>
+      <form>
+        <input type='text' placeholder='Username'/>
+        <input type='password' placeholder='Password'/>      
+        <button type='submit'>
+          submit
+        </button>
+      </form>
+    </div>
+  )
+}
+
+const App = () => {
+  return (
+    <Switch>
+      <Route path='/authorize'>
+        <SignIn />
+      </Route>
+      <Route path="/">
+        <Home />
+      </Route>
+    </Switch>
+  )
+}
+
 ReactDOM.render(
-  <App/>,
+  <Router>
+    <AuthProvider>
+      <App/>
+    </AuthProvider>
+  </Router>,
   document.getElementById('app')
 );
