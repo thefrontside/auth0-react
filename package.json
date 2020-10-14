@@ -15,6 +15,7 @@
   },
   "scripts": {
     "start": "parcel static/index.html --open --out-dir build/ --no-source-maps",
+    "dev": "tsdx watch",
     "prepare": "tsdx build",
     "test": "yarn bigtest ci",
     "test:server": "yarn bigtest server",

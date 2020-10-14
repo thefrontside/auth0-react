@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { 
-  Auth0Context,
-  Auth0Provider as AuthProvider, 
-  Auth0ProviderOptions
+  Auth0Context
 } from '@auth0/auth0-react';
+
+interface Auth0SimulationProviderOptions {
+  children?: React.ReactNode;
+  authorizeURL?: string;
+}
 
 function emptyAuthState(){
   return {
@@ -12,7 +15,8 @@ function emptyAuthState(){
   }
 }
 
-const TestableAuth0Provider = (props: Auth0ProviderOptions): JSX.Element => {
+export const Auth0SimulationProvider = (props: Auth0SimulationProviderOptions): JSX.Element => {
+  let { authorizeURL = '/authorize' } = props;
   let [ authState, setAuthState ] = useState(emptyAuthState());
 
   useEffect(() => {
@@ -35,8 +39,10 @@ const TestableAuth0Provider = (props: Auth0ProviderOptions): JSX.Element => {
         getIdTokenClaims: () => {
           throw new Error('Not yet implemented');
         },
-        loginWithRedirect: () => {
-          throw new Error('Not yet implemented');
+        loginWithRedirect: async () => {
+          if(authorizeURL){
+            window.location.pathname = authorizeURL;
+          }
         },
         loginWithPopup: () => {
           throw new Error('Not yet implemented');
@@ -50,6 +56,3 @@ const TestableAuth0Provider = (props: Auth0ProviderOptions): JSX.Element => {
     </Auth0Context.Provider>
   )
 };
-
-const parseBoolean = (str = '') => str.toLowerCase() === 'true';
-export const Auth0Provider =  parseBoolean(process.env.REACT_APP_SIMULATION) ? TestableAuth0Provider : AuthProvider;

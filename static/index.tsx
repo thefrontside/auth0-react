@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Auth0Provider } from '../src/provider';
-import { useAuth0 } from '@auth0/auth0-react';
+import { Auth0SimulationProvider, checkAuth0Simulation } from '../src';
+import { Auth0Provider, useAuth0 } from '@auth0/auth0-react';
       
 const Page = () => {
   let {
@@ -11,7 +11,7 @@ const Page = () => {
     // getAccessTokenSilently,
     // getAccessTokenWithPopup,
     // getIdTokenClaims,
-    // loginWithRedirect,
+    loginWithRedirect,
     // loginWithPopup,
     logout
   } = useAuth0();
@@ -23,20 +23,31 @@ const Page = () => {
       logout
     </button>
   ) : (
-    <p>user is not authenticated</p>
+    <div>
+      <p>user is not authenticated</p>
+      <button onClick={loginWithRedirect}>login with redirect</button>
+    </div>
   )
 };
 
 const App = () => {
-  return (
-    <Auth0Provider
-      domain="dev-02sbo7-w.us.auth0.com"
-      clientId="fwXiqOHihG63vBYGPhSCMHdRjruioWVr"
-      redirectUri={window.location.origin}
-    >
-      <Page />
-    </Auth0Provider>
-  )
+  if(checkAuth0Simulation()){
+    return (
+      <Auth0SimulationProvider>
+        <Page />
+      </Auth0SimulationProvider>
+    )
+  } else {
+    return (
+      <Auth0Provider
+        domain="dev-02sbo7-w.us.auth0.com"
+        clientId="fwXiqOHihG63vBYGPhSCMHdRjruioWVr"
+        redirectUri={window.location.origin}
+      >
+        <Page />
+      </Auth0Provider>
+    )
+  }
 }
 
 ReactDOM.render(
