@@ -4,7 +4,10 @@
     "chrome"
   ],
   "app": {
-    "command": "REACT_APP_SIMULATION=true parcel static/index.html --no-cache --out-dir build/ --no-source-maps",
+    "env": {
+      "REACT_APP_SIMULATION": "true"
+    },
+    "command": "parcel static/index.html --no-cache --out-dir build/ --no-source-maps",
     "url": "http://localhost:1234"
   },
   "testFiles": [
