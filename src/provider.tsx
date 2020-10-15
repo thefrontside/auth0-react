@@ -8,6 +8,8 @@ interface Auth0SimulationProviderOptions {
   children?: React.ReactNode;
   authorizeUri?: string;
   redirectUri?: Auth0ProviderOptions['redirectUri'];
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  getUser?(token: string): Promise<unknown>;
 }
 
 function emptyAuthState(){

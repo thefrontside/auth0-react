@@ -8,7 +8,7 @@ import {
   Route,
   useHistory
 } from "react-router-dom";
-import { authenticateUser } from '../src';
+import { setUserToken } from "../src";
 
 const Home = () => {
   let {
@@ -20,15 +20,19 @@ const Home = () => {
     // getIdTokenClaims,
     loginWithRedirect,
     // loginWithPopup,
-    logout
+    logout,
+    user
   } = useAuth0();
 
   return isAuthenticated ? (
-    <button
-      onClick={() => logout({ returnTo: window.location.origin })}
-    >
-      logout
-    </button>
+    <>
+      <h1>Hello {user.name}</h1>
+      <button
+        onClick={() => logout({ returnTo: window.location.origin })}
+      >
+        logout
+      </button>
+    </>
   ) : (
     <div>
       <p>user is not authenticated</p>
@@ -37,10 +41,19 @@ const Home = () => {
   )
 };
 
+const USERS = {
+  batman: {
+    firstName: 'Bruce',
+    lastName: 'Wayne'
+  }
+}
+
 const AuthProvider = ({ children }) => {
   if(checkAuth0Simulation()){
     return (
-      <Auth0SimulationProvider>
+      <Auth0SimulationProvider
+        getUser={async (token) => USERS[token]}
+      >
         {children}
       </Auth0SimulationProvider>
     )
@@ -64,7 +77,7 @@ const SignIn = () => {
     <div>
       <h1>sign in</h1>
       <form onSubmit={() => {
-        authenticateUser({username});
+        setUserToken(username);
         history.push('/')
       }}>
         <input type='text' placeholder='Username' value={username} onChange={e => setUsername(e.target.value)}/>

@@ -58,6 +58,7 @@ export default test('sure')
       .assertion('includes redirect uri', assertSearch('?redirect_uri=http://localhost:24001'))
       .assertion(Heading('sign in').exists())
       .child('authorize user', test => test
+        // need to fill in the name here
         .step(Button('submit').click())
         .assertion('redirected to /', assertPathname('/'))
       )
