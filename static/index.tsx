@@ -5,7 +5,8 @@ import { Auth0Provider, useAuth0 } from '@auth0/auth0-react';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  useHistory
 } from "react-router-dom";
 import { authenticateUser } from '../src';
 
@@ -58,14 +59,13 @@ const AuthProvider = ({ children }) => {
 
 const SignIn = () => {
   let [username, setUsername] = useState('');
+  let history = useHistory();
   return (
     <div>
       <h1>sign in</h1>
       <form onSubmit={() => {
         authenticateUser({username});
-        console.log('submitteedddd')
-        debugger;
-        window.location.href = '/';
+        history.push('/')
       }}>
         <input type='text' placeholder='Username' value={username} onChange={e => setUsername(e.target.value)}/>
         <input type='password' placeholder='Password'/>
