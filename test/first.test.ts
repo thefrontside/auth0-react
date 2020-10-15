@@ -23,7 +23,7 @@ export default test("Auth0 Simulation for React")
               .step(TextField({ placeholder: 'Username' }).fillIn('batman'))
               .step(Button("submit").click())
               .assertion("redirected to /", assertPathname("/"))
-              // .assertion(/* check that the token is displayed */)
+              
           )
       )
   )

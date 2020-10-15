@@ -4,7 +4,6 @@ import { Home } from './Home';
 import { SignIn } from "./SignIn";
 
 export const App = () => {
-  // if session doesn't exist, go to /authorize
   return (
     <Switch>
       <Route path="/authorize">

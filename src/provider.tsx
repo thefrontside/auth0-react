@@ -3,6 +3,7 @@ import {
   Auth0Context,
   Auth0ProviderOptions
 } from '@auth0/auth0-react';
+import { read } from './storage';
 
 interface Auth0SimulationProviderOptions {
   children?: React.ReactNode;
@@ -20,14 +21,18 @@ function emptyAuthState(){
   }
 }
 
+const getParam = (name: string) => (new URL(window.location.toString())).searchParams.get(name);
+
 export const Auth0SimulationProvider = (props: Auth0SimulationProviderOptions): JSX.Element => {
   let { authorizeUri = '/authorize', redirectUri = window.location.origin } = props;
   let [ authState, setAuthState ] = useState(emptyAuthState());
 
   useEffect(() => {
-    let { user, token } = JSON.parse(`${localStorage.getItem('@frontside/auth0-react')}`) ?? emptyAuthState();
-    if(user && token){
+    let { user = {}, token, code } = read();
+    if (user && token) {
       setAuthState({isAuthenticated: true, user, token})
+    } else if (getParam('code') === code) {
+      setAuthState({isAuthenticated: true, user, token: code})
     }
   }, []);
 

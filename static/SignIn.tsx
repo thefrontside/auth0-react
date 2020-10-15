@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { AuthorizeAuth0 } from '../src/test-helpers';
+import { generateCodeForUser } from '../src/generate-code-for-user';
 
 export const SignIn = () => {
   let [username, setUsername] = useState("");
@@ -11,8 +11,8 @@ export const SignIn = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          AuthorizeAuth0({ username });
-          history.push("/");
+          let code = generateCodeForUser({ username });
+          history.push(`/?code=${code}`);
         }}
       >
         <input
