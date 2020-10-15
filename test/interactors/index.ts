@@ -1,5 +1,1 @@
-import Paragraph from './Paragraph';
-
-export {
-  Paragraph
-};
+export { Paragraph } from './Paragraph';
