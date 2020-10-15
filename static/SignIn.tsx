@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { setUserToken } from '../src/test-helpers';
+import { AuthorizeAuth0 } from '../src/test-helpers';
 
 export const SignIn = () => {
   let [username, setUsername] = useState("");
@@ -9,9 +9,9 @@ export const SignIn = () => {
     <div>
       <h1>sign in</h1>
       <form
-        onSubmit={() => {
-          console.log('username', username)
-          setUserToken(username);
+        onSubmit={(e) => {
+          e.preventDefault();
+          AuthorizeAuth0({ username });
           history.push("/");
         }}
       >

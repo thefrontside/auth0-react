@@ -15,7 +15,7 @@ export const Home = () => {
     user
   } = useAuth0();
 
-  let token = getAccessTokenSilently();
+  let token = async () => await getAccessTokenSilently();
 
   return isAuthenticated ? (
     <>
@@ -26,9 +26,9 @@ export const Home = () => {
       </button>
     </>
   ) : (
-    <div>
+    <>
       <p>user is not authenticated</p>
       <button onClick={loginWithRedirect}>login with redirect</button>
-    </div>
+    </>
   );
 };

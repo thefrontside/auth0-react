@@ -25,11 +25,11 @@ export const Auth0SimulationProvider = (props: Auth0SimulationProviderOptions): 
   let [ authState, setAuthState ] = useState(emptyAuthState());
 
   useEffect(() => {
-    let auth0 = JSON.parse(`${localStorage.getItem('@frontside/auth0-react')}`) ?? emptyAuthState();
-    setAuthState(auth0);
+    let { user, token } = JSON.parse(`${localStorage.getItem('@frontside/auth0-react')}`) ?? emptyAuthState();
+    if(user && token){
+      setAuthState({isAuthenticated: true, user, token})
+    }
   }, []);
-
-  // pressing submit = takes user and password and turn into token
 
   return (
     <Auth0Context.Provider

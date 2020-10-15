@@ -1,7 +1,7 @@
 {
   "port": 24000,
   "launch": [
-    "chrome"
+    "chrome.headless"
   ],
   "app": {
     "env": {

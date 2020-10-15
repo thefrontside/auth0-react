@@ -1,5 +1,5 @@
 import { App, Button, Heading, test, TextField } from "bigtest";
-import { authenticateUser } from "../src/test-helpers";
+import { AuthorizeAuth0 } from "../src/test-helpers";
 import { assertPathname, assertSearch } from "./helpers";
 
 import { Paragraph } from "./interactors";
@@ -20,20 +20,16 @@ export default test("Auth0 Simulation for React")
           .assertion(Heading("sign in").exists())
           .child("authorize user", test =>
             test
-              // TODO: need to fill in the name here
               .step(TextField({ placeholder: 'Username' }).fillIn('batman'))
-              // eslint-disable-next-line @typescript-eslint/no-empty-function
-              .step('pause', () => new Promise<void>(() => { }))
               .step(Button("submit").click())
               .assertion("redirected to /", assertPathname("/"))
+              // .assertion(/* check that the token is displayed */)
           )
       )
   )
-  .child("authenticateUser()", test =>
+  .child("AuthorizeAuth0", test =>
     test
-      .step("authenticate user", async () => {
-        authenticateUser();
-      })
+      .step('authorize user', AuthorizeAuth0({firstname: 'bruce', lastname: 'wayne'}))
       .step(App.visit("/"))
       .assertion(Button("logout").exists())
       .child("log out", test =>
