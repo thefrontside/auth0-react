@@ -10,29 +10,55 @@ interface Auth0SimulationProviderOptions {
   authorizeUri?: string;
   redirectUri?: Auth0ProviderOptions['redirectUri'];
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  getUser?(token: string): Promise<unknown>;
+  getUser?(code?: string): Promise<Record<string, unknown>>;
 }
 
-function emptyAuthState(){
+function emptyAuthState(): Auth0SimulationProviderState {
   return {
     user: {},
     isAuthenticated: false,
-    token: ''
+    token: '',
+    isLoading: false,
   }
 }
 
 const getParam = (name: string) => (new URL(window.location.toString())).searchParams.get(name);
 
+const defaultGetUser = async (): Promise<Record<string, unknown>> => {
+  let data = await fetch('/oauth/token', {
+    method: 'POST',
+  });
+  let parsed = await data.json();
+  if (!parsed) return parsed;
+  let { user } = parsed;
+  return user;
+}
+
+interface Auth0SimulationProviderState {
+  user: Record<string, unknown>;
+  isAuthenticated: boolean;
+  token?: string;
+  isLoading?: boolean;
+}
+
 export const Auth0SimulationProvider = (props: Auth0SimulationProviderOptions): JSX.Element => {
-  let { authorizeUri = '/authorize', redirectUri = window.location.origin } = props;
-  let [ authState, setAuthState ] = useState(emptyAuthState());
+  let { authorizeUri = '/authorize', redirectUri = window.location.origin, getUser = defaultGetUser } = props;
+  let [ authState, setAuthState ] = useState<Auth0SimulationProviderState>(emptyAuthState());
 
   useEffect(() => {
     let { user = {}, token, code } = read();
     if (user && token) {
       setAuthState({isAuthenticated: true, user, token})
     } else if (getParam('code') === code) {
-      setAuthState({isAuthenticated: true, user, token: code})
+      if (user) {
+        setAuthState({isAuthenticated: true, user, token: code})
+      } else {
+        (async () => {
+          let user = await getUser();
+          setAuthState({isAuthenticated: true, user, token: code, isLoading: false})
+        })();
+        setAuthState({ isLoading: true, isAuthenticated: false, user })
+      }
     }
   }, []);
 
@@ -41,9 +67,9 @@ export const Auth0SimulationProvider = (props: Auth0SimulationProviderOptions): 
       value={{
         isAuthenticated: authState.isAuthenticated,
         user: authState.user,
-        isLoading: false,
+        isLoading: !!authState.isLoading,
         getAccessTokenSilently: async () => {
-          return authState.token;
+          return authState.token || '';
         },
         getAccessTokenWithPopup: () => {
           throw new Error('Not yet implemented');

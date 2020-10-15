@@ -2,17 +2,10 @@ import React from 'react';
 import { Auth0SimulationProvider, checkAuth0Simulation } from "../src";
 import { Auth0Provider } from "@auth0/auth0-react";
 
-const USERS = {
-  batman: {
-    firstName: "Bruce",
-    lastName: "Wayne"
-  }
-};
-
 export const AuthProvider = ({ children }) => {
   if (checkAuth0Simulation()) {
     return (
-      <Auth0SimulationProvider getUser={async token => USERS[token]}>
+      <Auth0SimulationProvider>
         {children}
       </Auth0SimulationProvider>
     );

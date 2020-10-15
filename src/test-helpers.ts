@@ -5,4 +5,4 @@ export const AuthorizeAuth0 = (user: Record<string, unknown>) => () => {
   let token = uuidv4();
   merge({ token, user });
   return { token };
-}
+};
