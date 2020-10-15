@@ -8,7 +8,7 @@ const merge = (overwrite: any) => {
   } catch {}
   localStorage.setItem(STORAGE_KEY, JSON.stringify({
     ...data,
-    overwrite
+    ...overwrite
   }));
 }
 

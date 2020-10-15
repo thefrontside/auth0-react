@@ -24,7 +24,7 @@ export const Auth0SimulationProvider = (props: Auth0SimulationProviderOptions): 
   let [ authState, setAuthState ] = useState(emptyAuthState());
 
   useEffect(() => {
-    let auth0 = JSON.parse(`${localStorage.getItem('@frontside/auth0-react')}`) || emptyAuthState();
+    let auth0 = JSON.parse(`${localStorage.getItem('@frontside/auth0-react')}`) ?? emptyAuthState();
     setAuthState(auth0);
   }, []);
 
