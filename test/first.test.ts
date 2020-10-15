@@ -5,12 +5,10 @@ import { assertPathname, assertSearch } from "./helpers";
 import { Paragraph } from "./interactors";
 
 export default test("Auth0 Simulation for React")
-  .child("anonymous", test =>
-    test
+  .child("anonymous", test => test
       .step(App.visit("/"))
       .assertion(Paragraph("user is not authenticated").exists())
-      .child("using loginWithRedirect", test =>
-        test
+      .child("using loginWithRedirect", test => test
           .step(Button("login with redirect").click())
           .assertion("redirected to /authorize", assertPathname("/authorize"))
           .assertion(
@@ -18,23 +16,22 @@ export default test("Auth0 Simulation for React")
             assertSearch("?redirect_uri=http://localhost:24001")
           )
           .assertion(Heading("sign in").exists())
-          .child("authorize user", test =>
-            test
+          .child("authorize user", test => test
               .step(TextField({ placeholder: 'Username' }).fillIn('batman'))
               .step(Button("submit").click())
               .assertion("redirected to /", assertPathname("/"))
-              
+              .assertion(Heading("Hello batman").exists())
           )
       )
   )
-  .child("AuthorizeAuth0", test =>
-    test
-      .step('authorize user', AuthorizeAuth0({firstname: 'bruce', lastname: 'wayne'}))
-      .step(App.visit("/"))
-      .assertion(Button("logout").exists())
-      .child("log out", test =>
-        test
-          .step(Button("logout").click())
-          .assertion(Paragraph("user is not authenticated").exists())
-      )
-  );
+  // .child("AuthorizeAuth0", test =>
+  //   test
+  //     .step('authorize user', AuthorizeAuth0({firstname: 'bruce', lastname: 'wayne'}))
+  //     .step(App.visit("/"))
+  //     .assertion(Button("logout").exists())
+  //     .child("log out", test =>
+  //       test
+  //         .step(Button("logout").click())
+  //         .assertion(Paragraph("user is not authenticated").exists())
+  //     )
+  // );

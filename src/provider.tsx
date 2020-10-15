@@ -29,6 +29,7 @@ export const Auth0SimulationProvider = (props: Auth0SimulationProviderOptions): 
 
   useEffect(() => {
     let { user = {}, token, code } = read();
+    debugger;
     if (user && token) {
       setAuthState({isAuthenticated: true, user, token})
     } else if (getParam('code') === code) {

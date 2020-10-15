@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { generateCodeForUser } from '../src/generate-code-for-user';
 
 export const SignIn = () => {
   let [username, setUsername] = useState("");
-  let history = useHistory();
   return (
     <div>
       <h1>sign in</h1>
@@ -12,7 +10,7 @@ export const SignIn = () => {
         onSubmit={(e) => {
           e.preventDefault();
           let code = generateCodeForUser({ username });
-          history.push(`/?code=${code}`);
+          window.location.href = `/?code=${code}`;
         }}
       >
         <input

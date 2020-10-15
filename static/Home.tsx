@@ -19,7 +19,7 @@ export const Home = () => {
 
   return isAuthenticated ? (
     <>
-      <h1>Hello {user.name}</h1>
+      <h1>Hello {user.username}</h1>
       <span>User Token is {token}</span>
       <button onClick={() => logout({ returnTo: window.location.origin })}>
         logout
