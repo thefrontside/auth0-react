@@ -21,7 +21,9 @@ export default test("Auth0 Simulation for React")
         .assertion("redirected to /", assertPathname("/"))
         .assertion(Heading("Hello batman").exists()))))
   .child("AuthorizeAuth0", test => test
-    .step('authorize user', AuthorizeAuth0({firstname: 'bruce', lastname: 'wayne'}))
+    .step('authorize user', async () => { 
+      AuthorizeAuth0({firstname: 'bruce', lastname: 'wayne'})
+    })
     .step(App.visit("/"))
     .assertion(Button("logout").exists())
     .child("log out", test => test
