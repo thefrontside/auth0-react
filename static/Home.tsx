@@ -6,7 +6,7 @@ export const Home = () => {
     isAuthenticated,
     // error,
     // isLoading,
-    // getAccessTokenSilently,
+    getAccessTokenSilently,
     // getAccessTokenWithPopup,
     // getIdTokenClaims,
     loginWithRedirect,
@@ -15,9 +15,12 @@ export const Home = () => {
     user
   } = useAuth0();
 
+  let token = getAccessTokenSilently();
+
   return isAuthenticated ? (
     <>
       <h1>Hello {user.name}</h1>
+      <span>User Token is {token}</span>
       <button onClick={() => logout({ returnTo: window.location.origin })}>
         logout
       </button>

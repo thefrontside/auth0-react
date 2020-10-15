@@ -22,6 +22,8 @@ export default test("Auth0 Simulation for React")
             test
               // TODO: need to fill in the name here
               .step(TextField({ placeholder: 'Username' }).fillIn('batman'))
+              // eslint-disable-next-line @typescript-eslint/no-empty-function
+              .step('pause', () => new Promise<void>(() => { }))
               .step(Button("submit").click())
               .assertion("redirected to /", assertPathname("/"))
           )
@@ -33,8 +35,6 @@ export default test("Auth0 Simulation for React")
         authenticateUser();
       })
       .step(App.visit("/"))
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      // .step('pause', () => new Promise<void>(() => { }))
       .assertion(Button("logout").exists())
       .child("log out", test =>
         test

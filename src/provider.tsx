@@ -15,7 +15,8 @@ interface Auth0SimulationProviderOptions {
 function emptyAuthState(){
   return {
     user: {},
-    isAuthenticated: false
+    isAuthenticated: false,
+    token: ''
   }
 }
 
@@ -37,7 +38,7 @@ export const Auth0SimulationProvider = (props: Auth0SimulationProviderOptions): 
         user: authState.user,
         isLoading: false,
         getAccessTokenSilently: async () => {
-          return 'my-token';
+          return authState.token;
         },
         getAccessTokenWithPopup: () => {
           throw new Error('Not yet implemented');
