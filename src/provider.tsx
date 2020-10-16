@@ -61,6 +61,8 @@ export const Auth0SimulationProvider = (props: Auth0SimulationProviderOptions): 
         })();
         setAuthState({ isLoading: true, isAuthenticated: false, user })
       }
+    } else {
+      setAuthState({ isLoading: false, isAuthenticated: false, user })
     }
   }, []);
 
