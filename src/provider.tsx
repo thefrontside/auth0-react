@@ -18,7 +18,9 @@ function emptyAuthState(): Auth0SimulationProviderState {
     user: {},
     isAuthenticated: false,
     token: '',
-    isLoading: false,
+    // @see: https://github.com/auth0/auth0-react/blob/master/src/auth-state.tsx#L18
+    // In SSR mode the library will never check the session, so loading should be initialised as false
+    isLoading: typeof window !== 'undefined',
   }
 }
 
@@ -48,10 +50,10 @@ export const Auth0SimulationProvider = (props: Auth0SimulationProviderOptions): 
   useEffect(() => {
     let { user = {}, token, code } = read();
     if (user && token) {
-      setAuthState({isAuthenticated: true, user, token})
+      setAuthState({isAuthenticated: true, user, token, isLoading: false})
     } else if (getParam('code') === code) {
       if (user) {
-        setAuthState({isAuthenticated: true, user, token: code})
+        setAuthState({isAuthenticated: true, user, token: code, isLoading: false})
       } else {
         (async () => {
           let user = await getUser();

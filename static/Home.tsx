@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react';
 
 export const Home = () => {
@@ -29,6 +30,7 @@ export const Home = () => {
     <>
       <p>user is not authenticated</p>
       <button onClick={loginWithRedirect}>login with redirect</button>
+      <Link to="/account">my account</Link>
     </>
   );
 };

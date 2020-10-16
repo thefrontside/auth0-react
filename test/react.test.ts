@@ -14,7 +14,7 @@ export default test("Auth0 Simulation for React")
       .assertion(
         "includes redirect uri",
         assertSearch("?redirect_uri=http://localhost:24001"))
-      .assertion(Heading("sign in").exists())
+      .assertion(Heading("Sign In").exists())
       .child("authorize user", test => test
         .step(TextField({ placeholder: 'Username' }).fillIn('batman'))
         .step(Button("submit").click())
@@ -28,4 +28,8 @@ export default test("Auth0 Simulation for React")
     .assertion(Button("logout").exists())
     .child("log out", test => test
       .step(Button("logout").click())
-			.assertion(Paragraph("user is not authenticated").exists())));
+      .assertion(Paragraph("user is not authenticated").exists())))
+  .child('withAuthenticationRequired', test => test
+    .step(App.visit("/account"))
+    .assertion(Heading("Sign In").exists())
+  )

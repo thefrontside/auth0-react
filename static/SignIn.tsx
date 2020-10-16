@@ -5,7 +5,7 @@ export const SignIn = () => {
   let [username, setUsername] = useState("");
   return (
     <div>
-      <h1>sign in</h1>
+      <h1>Sign In</h1>
       <form
         onSubmit={(e) => {
           e.preventDefault();
